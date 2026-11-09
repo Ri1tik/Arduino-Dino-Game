@@ -88,6 +88,39 @@ The LCD backlight is connected to 5V and GND, using a current-limiting resistor 
 6. Upload the code to the Arduino UNO.
 7. Start the simulation or power the circuit to play the game.
 
+## Game Flowchart
+
+The following flowchart illustrates the overall working of the Arduino Dino Game, from initialization and menu navigation to gameplay, collision detection, and score saving.
+
+```mermaid
+flowchart TD
+    A([Arduino Starts]) --> B[setup: Initialize LCD, characters and buttons]
+    B --> C[Display START / SCORE Menu]
+    C --> D{SELECT pressed?}
+    D -->|Yes| E[Switch selected menu option]
+    D -->|No| F{ENTER pressed?}
+    E --> F
+    F -->|No| C
+    F -->|Yes: START| G[Start Game]
+    F -->|Yes: SCORE| H[Display Saved Scores]
+    H --> I{ENTER pressed?}
+    I -->|No| H
+    I -->|Yes| C
+    G --> J[Display Dino and Trees]
+    J --> K[Read ENTER button]
+    K --> L{Dino jumping?}
+    L -->|Yes| M[Display Dino on upper row]
+    L -->|No| N[Display Dino on lower row]
+    M --> O[Move trees left]
+    N --> O
+    O --> P{Tree reaches Dino column?}
+    P -->|No| J
+    P -->|Yes, Dino on ground| Q[GAME OVER]
+    P -->|Yes, Dino jumping| J
+    Q --> R[Enter three-letter name]
+    R --> S[Save score]
+    S --> C
+```
 ## Project Images
 
 ### Circuit Diagram
